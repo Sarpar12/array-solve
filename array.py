@@ -1,22 +1,20 @@
 from array import *
 
-def matrix_create():
-        
-    m = int(input('How many columns? '))        # This is taking inputs for number of rows and columns
-    print('You input ' + str(m) + ' columns.' )
-    n = int(input('How many rows? '))
-    print('You input' + str(n) + 'rows.' )
-    
-    array1 = [0] * n       # This creates the matrix
-    for i in range (n):
-        array1[i] = [0] * m 
-    print(array1)
+class matrix:
 
-matrix_create() 
-
-        
+    def __init__(self, rows, columns):
+        self.rows = rows
+        self.columns = columns
+        self.array1 = []
 
 
+    def create(self):
 
-    
+        self.array1 = [0] * self.columns       # This creates the matrix
+        for i in range (self.columns):
+            self.array1[i] = [0] * self.rows
+        print(self.array1)
+
+mat1 = matrix(3, 3)
+mat1.create()
 
