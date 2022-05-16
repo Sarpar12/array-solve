@@ -26,3 +26,7 @@ init_value()
 
 def populate():     # Fills matrix with values
     for i in filled_matrix:     # i in this case is a list like [x, y, z, c] in [[x, y, z, c], [a, b, c, d], [q, w, e, r]]
+        for j in i:     # j should refer to an element in a list such as [x] in [x, y, z, c]
+            j = int(input('What is the value for Column ' + str(j) + ' in row ' + str(i) + '?'))
+
+populate()
