@@ -37,7 +37,7 @@ def row_swap(row1, row2):
 
 def multiply(row, number):
     Actual_row = row - 1
-    filled_matrix[Actual_row] = [i * 5 for i in filled_matrix[Actual_row]]      # This uses lists comprehension
+    filled_matrix[Actual_row] = [i * number for i in filled_matrix[Actual_row]]      # This uses lists comprehension
     return filled_matrix
 
 def subtract(row1, row2):
@@ -56,11 +56,9 @@ def addition(row1, row2):
 
 def display_matrix():
     print(*filled_matrix, sep = "\n")
+    global time_called
 
-while True: 
-    init_value()
-    populate()
-    display_matrix()
+def operations():
     choice = int(input('\t1. Swap Rows\n\t2. Multiply\n\t3. Add\n\t4. Subtract\n\t5. Exit\n'))
     if choice == 1:
         row1 = int(input('Initial Row? '))
@@ -83,4 +81,13 @@ while True:
         subtract(row1, row2)
         display_matrix()    
     elif choice == 5:
-        exit()  
+        exit()
+
+def start():
+    init_value()
+    populate()
+    display_matrix()
+    while True:
+        operations()
+
+start()
