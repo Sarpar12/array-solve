@@ -56,3 +56,24 @@ def addition(row1, row2):
 
 def display_matrix():
     print(*filled_matrix, sep = "\n")
+
+while True: 
+    init_value()
+    populate()
+    choice = int(input('1. Swap Rows\n\t2. Multiply\n\t3. Add\n\t4. Subtract\n\t5. Exit'))
+    if choice == 1:
+        row1 = int(input('Initial Row? '))
+        row2 = int(input('With which row? '))
+        row_swap(row1, row2)
+    elif choice == 2:
+        row = int(input('Which Row? '))
+        number = int(input('By how much? '))
+        multiply(row, number)
+    elif choice == 3:
+        row1 = int(input('Which row are you adding to(Inital Row)? '))
+        row2 = int(input('Which row is being added to the Initial Row? '))
+    elif choice == 4:
+        row1 = int(input('Which row are you subtracting from(Inital Row)? '))
+        row2 = int(input('Which row is Initial Row being subtracted by? '))      
+    elif choice == 5:
+        exit()  
