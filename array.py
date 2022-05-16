@@ -33,9 +33,13 @@ def populate():     # Fills matrix with values
 
 populate()
 
-def row_swap(list, row1, row2):
+def row_swap(row1, row2):
     Actual_row1 = row1 - 1
     Actual_row2 = row2 - 1
     filled_matrix[Actual_row1], filled_matrix[Actual_row2] = filled_matrix[Actual_row2], filled_matrix[Actual_row1]
     return filled_matrix
 
+def multiply(row, number):
+    Actual_row = row - 1
+    filled_matrix[Actual_row] = [i * 5 for i in filled_matrix[Actual_row]]
+    return filled_matrix
