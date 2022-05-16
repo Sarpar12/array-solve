@@ -21,8 +21,6 @@ def init_value():       # Returns matrix with number of columns and rows filled 
     global filled_matrix        # makes filled matrix a global variable
     filled_matrix = matrices1.array1        # takes array1 from filled_matrix, which was just filled with 0's
 
-init_value()
-
 def populate():     # Fills matrix with values
     for count, values in enumerate(filled_matrix):      # Values refer to a list inside a list like [x, y] in [[x, y], [z, x]]
         row_number = count + 1
@@ -30,8 +28,6 @@ def populate():     # Fills matrix with values
             column_number = count2 + 1
             filled_matrix[count][count2] = int(input('Number for row ' + str(row_number) + ' and column ' + str(column_number) + '? '))
             print(filled_matrix)
-
-populate()
 
 def row_swap(row1, row2):
     Actual_row1 = row1 - 1
@@ -57,3 +53,6 @@ def addition(row1, row2):
     filled_matrix[Actual_row1] = [a + b for a, b in zip(filled_matrix[Actual_row1], filled_matrix[Actual_row2])]
             # Subtraction but you add instead of subtract. f_m = filled_matrix, A_R = actual_rows
     return filled_matrix
+
+def display_matrix():
+    print(*filled_matrix, sep = "\n")
