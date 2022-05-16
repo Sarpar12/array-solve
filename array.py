@@ -25,9 +25,9 @@ def init_value():       # Returns matrix with number of columns and rows filled 
 init_value()
 
 def populate():     # Fills matrix with values
-    for count, values in enumerate(filled_matrix):
+    for count, values in enumerate(filled_matrix):      # Values refer to a list inside a list like [x, y] in [[x, y], [z, x]]
         row_number = count + 1
-        for count2, values2 in enumerate(filled_matrix):
+        for count2, values2 in enumerate(values):       # values2 refer to the objects inside value([x, y])
             column_number = count2 + 1
             filled_matrix[count][count2] = int(input('Number for row ' + str(row_number) + ' and column ' + str(column_number) + '? '))
             print(filled_matrix)
