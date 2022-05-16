@@ -25,12 +25,11 @@ def init_value():       # Returns matrix with number of columns and rows filled 
 init_value()
 
 def populate():     # Fills matrix with values
-    for i in filled_matrix:     # i in this case is a list like [x, y, z, c] in [[x, y, z, c], [a, b, c, d], [q, w, e, r]]
-        row_number = 0
-        row_number = row_number + 1
-        for j in i:     # j should refer to an element in a list such as [x] in [x, y, z, c]
-            column_number = 0
-            column_number = column_number + 1
-            j = int(input('What is the value for Column ' + str(column_number) + ' in row ' + str(row_number) + '? '))
+    for count, values in enumerate(filled_matrix):
+        row_number = count + 1
+        for count2, values2 in enumerate(filled_matrix):
+            column_number = count2 + 1
+            filled_matrix[count][count2] = int(input('Number for row ' + str(row_number) + ' and column ' + str(column_number) + '? '))
+            print(filled_matrix)
 
 populate()
