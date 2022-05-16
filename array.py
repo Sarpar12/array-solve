@@ -50,3 +50,10 @@ def subtract(row1, row2):
     filled_matrix[Actual_row1] = [a - b for a, b in zip(filled_matrix[Actual_row1], filled_matrix[Actual_row2])]
             # Basically, f_m[A_R1] = A, which has [a, a, a,] and f-m[A_R2] = B which has [b, b, b], so you can subtract
     return filled_matrix
+
+def addition(row1, row2):
+    Actual_row1 = row1 - 1
+    Actual_row2 = row2 - 1
+    filled_matrix[Actual_row1] = [a + b for a, b in zip(filled_matrix[Actual_row1], filled_matrix[Actual_row2])]
+            # Subtraction but you add instead of subtract. f_m = filled_matrix, A_R = actual_rows
+    return filled_matrix
