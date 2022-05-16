@@ -12,7 +12,6 @@ class matrix:
         self.array1 = [0] * self.rows       # This creates the matrix
         for i in range (self.rows):
             self.array1[i] = [0] * self.columns
-        
 
 def init_value():       # Returns matrix with number of columns and rows filled with 0's as filled_matrix
     rows = int(input("How many rows? "))
@@ -33,3 +32,10 @@ def populate():     # Fills matrix with values
             print(filled_matrix)
 
 populate()
+
+def row_swap(list, row1, row2):
+    Actual_row1 = row1 - 1
+    Actual_row2 = row2 - 1
+    filled_matrix[Actual_row1], filled_matrix[Actual_row2] = filled_matrix[Actual_row2], filled_matrix[Actual_row1]
+    return filled_matrix
+
