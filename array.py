@@ -54,10 +54,9 @@ def addition(row1, row2):
             # Subtraction but you add instead of subtract. f_m = filled_matrix, A_R = actual_rows
     return filled_matrix
 
-def display_matrix():
-    print(*filled_matrix, sep = "\n")
-    global time_called
-
+def display_matrix():       # Displays list with new lines
+    print(*filled_matrix, sep = "\n")       # *filled_matrix spaces out elements in a list
+    
 def operations():
     choice = int(input('\t1. Swap Rows\n\t2. Multiply\n\t3. Add\n\t4. Subtract\n\t5. Exit\n'))
     if choice == 1:
@@ -88,6 +87,6 @@ def start():
     populate()
     display_matrix()
     while True:
-        operations()
+        operations()        # Countinueous loops operations
 
 start()
