@@ -24,8 +24,6 @@ def init_value():       # Returns matrix with number of columns and rows filled 
 
 init_value()
 
-print(filled_matrix)
-
 def populate():     # Fills matrix with values
     for i in filled_matrix:     # i in this case is a list like [x, y, z] in [[x, y, z], [x, y, z]]
         row_number
