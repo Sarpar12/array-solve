@@ -26,6 +26,8 @@ class matrix:
         matrix[[I_row, A_row]] = matrix [[A_row, I_row]]
         return matrix 
 
+    def coluumn_swap(matrix):
+
     
 def start():
     Imatrix = matrix()
