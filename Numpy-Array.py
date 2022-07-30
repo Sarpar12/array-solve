@@ -15,14 +15,13 @@ class matrix:
         list_of_values = list(map(int, input('Input Matrix values, Ex: "1 2 3" ').split()))
         self.array1 = np.array(list_of_values).reshape(rows,columns)
 
-    # Throws Error, might need to be moved out of class
-    def display_matrix(self):
-        print(array1) # Naturally fomatted with rows and columns due to numpy
-
     # Needs more work for all functions below comment
     def row_swap(self):
         I_row = int(input("Original Row? "))
         A_row = int(input("Row to swap? "))
         
 
+
+def display_matrix():
+    print(matrix.array1) # Naturally fomatted with rows and columns due to numpy
 
