@@ -17,16 +17,20 @@ class matrix:
             self.array1 = np.array(list_of_values).reshape(self.rows,self.columns)
             return self.array1
         else:
-            self.reshape_and_fill() # Loops function if # of terms doesnt match what should be there
+            print("Too much or too little terms!")
+            return self.reshape_and_fill() # Loops function if # of terms doesnt match what should be there
 
-    # Needs more work for all functions below comment
-    def row_swap(self):
-        I_row = int(input("Original Row? "))
-        A_row = int(input("Row to swap? "))
+    def row_swap(matrix):
+        I_row = (int(input("Original Row? ")) - 1)
+        A_row = (int(input("Row to swap? ")) - 1)
+        matrix[[I_row, A_row]] = matrix [[A_row, I_row]]
+        return matrix 
+
     
 def start():
     Imatrix = matrix()
     Imatrix = Imatrix.reshape_and_fill()
     print(Imatrix)
+    print(matrix.row_swap(Imatrix))
 
 start()
