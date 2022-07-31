@@ -47,19 +47,49 @@ class matrix:
         return self.array1
     
     def row_addition(self): # Might need subarrays, numpy doesnt seem to provide a way to add values within the same matrix
-                            # Also pulling the zip() too smh
         I_row = (int(input("Row to be added to? ")) - 1)
         A_row = (int(input("Row added to other row? ")) - 1)
         A_row_multiple = int(input("What is 2nd row multplied by? "))
         self.addition_buffer_row_column = np.multiply(self.array1[A_row, :], A_row_multiple)
         self.array1[I_row, :] = np.array([term1 + term2 for term1, term2 in zip(self.array1[I_row, :], self.addition_buffer_row_column)])
+        self.addition_buffer_row_column = np.empty
         return self.array1
+    
+    def col_addition(self):
+        I_col = (int(input("column to be added to? ")) - 1)
+        A_col = (int(input("column added to other column? ")) - 1)
+        A_col_multiple = int(input("What is 2nd column multplied by? "))
+        self.addition_buffer_row_column = np.multiply(self.array1[:, A_col], A_col_multiple)
+        self.array1[:, I_col] = np.array([term1 + term2 for term1, term2 in zip(self.array1[:, I_col], self.addition_buffer_row_column)])
+        self.addition_buffer_row_column = np.empty
+        return self.array1
+
+    def row_subtraction(self):
+        I_row = (int(input("Row to be subtracted from? ")) - 1)
+        A_row = (int(input("Row used to subtract? ")) - 1)
+        A_row_multiple = int(input("What is 2nd row multplied by? "))
+        self.subtraction_buffer_row_column = np.multiply(self.array1[A_row, :], A_row_multiple)
+        self.array1[I_row, :] = np.array([term1 - term2 for term1, term2 in zip(self.array1[I_row, :], self.subtraction_buffer_row_column)])
+        self.subtraction_buffer_row_column = np.empty
+        return self.array1
+    
+    def col_subtraction(self): 
+        I_col = (int(input("column to be subtracted from? ")) - 1)
+        A_col = (int(input("column used to subtract? ")) - 1)
+        A_col_multiple = int(input("What is 2nd col multplied by? "))
+        self.subtraction_buffer_row_column = np.multiply(self.array1[:, A_col], A_col_multiple)
+        self.array1[:, I_col] = np.array([term1 - term2 for term1, term2 in zip(self.array1[:, I_col], self.subtraction_buffer_row_column)])
+        self.subtraction_buffer_row_column = np.empty
+        return self.array1
+
+        
+    
 
 def start():
     rows = int(input("How many rows? "))
     columns = int(input("How many Columns? "))
     Matrix_Use = matrix(rows, columns)
     Matrix_Use.reshape_and_fill()
-    print(Matrix_Use.row_addition())
+    print(Matrix_Use.row_subtraction())
 
 start()
