@@ -81,6 +81,13 @@ class matrix:
         self.array1[:, I_col] = np.array([term1 - term2 for term1, term2 in zip(self.array1[:, I_col], self.subtraction_buffer_row_column)])
         self.subtraction_buffer_row_column = np.empty
         return self.array1
+    
+    def deter_finder(self):
+        return int(np.linalg.det(self.array1))
+    
+    def inv_finder(): # Will give floats, not sure how to solve
+
+    
 
         
     
@@ -90,6 +97,8 @@ def start():
     columns = int(input("How many Columns? "))
     Matrix_Use = matrix(rows, columns)
     Matrix_Use.reshape_and_fill()
-    print(Matrix_Use.row_subtraction())
+    print(Matrix_Use.array1.shape)
+    input()
+    print(Matrix_Use.deter_finder())
 
 start()
