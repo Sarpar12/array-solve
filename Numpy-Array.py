@@ -1,13 +1,15 @@
 import numpy as np
 
 class matrix: 
-
     # This functions creates matrix
-    def __init__(self):
+    def __init__(self,rows,columns):
         self.array1 = np.empty # Create an array with 0 rows and 0 columns
-        self.rows = int(input("How many rows is the matrix? ")) 
-        self.columns = int(input("How many columns is the matrix? "))
-    
+        self.rows = rows 
+        self.columns = columns 
+        self.buffer_addition_matrix = np.empty 
+        self.buffer_subtraction_matrix = np.empty 
+        self.buffer_undo_matrix = np.empty
+  
     # This Functions does as named
     def reshape_and_fill(self): 
         # Takes Input of "1 2 3"(note the spaces,  this is funcinput), uses map(func, funcinput) to apply int() to funcinput
@@ -20,19 +22,19 @@ class matrix:
             print("Too much or too little terms!")
             return self.reshape_and_fill() # Loops function if # of terms doesnt match what should be there
 
-    def row_swap(matrix):
+    def row_swap(self):
         I_row = (int(input("Original Row? ")) - 1)
         A_row = (int(input("Row to swap? ")) - 1)
-        matrix[[I_row, A_row]] = matrix [[A_row, I_row]]
-        return matrix 
+        self.array1[[I_row, A_row]] = self.array1[[A_row, I_row]]
+        return self.array1
 
-    def coluumn_swap(matrix):
 
     
 def start():
-    Imatrix = matrix()
-    Imatrix = Imatrix.reshape_and_fill()
-    print(Imatrix)
-    print(matrix.row_swap(Imatrix))
+    rows = int(input("How many rows? "))
+    columns = int(input("How many Columns? "))
+    Matrix_Use = matrix(rows, columns)
+    Matrix_Use.reshape_and_fill()
+    print(Matrix_Use.row_swap())
 
 start()
