@@ -89,7 +89,7 @@ class matrix:
 
 def makeMatrix():
     inputNums = list(map(int, input('Input RxC, Ex: "R C"\n').split()))
-    while len(inputNums) < 2: # Input validation 
+    while len(inputNums) >= 2: # Input validation 
         inputNums = list(map(int, input('Input RxC, Ex: "R C"\n').split()))
     row, column = inputNums[0], inputNums[1] 
     tempMatrix = matrix(row, column)
