@@ -1,4 +1,8 @@
 import numpy as np
+from collections import deque
+
+global globalMatrix
+global matrixStack = deque() ### Creates a LIFO storing copies of previous arrays
 
 class matrix: 
     # This functions creates matrix
@@ -9,7 +13,6 @@ class matrix:
         self.rows = rows 
         self.columns = columns 
 
-  
     # This Functions does as named
     def reshape_and_fill(self): 
         # Takes Input of "1 2 3"(note the spaces,  this is funcinput), uses map(func, funcinput) to apply int() to funcinput
@@ -21,6 +24,9 @@ class matrix:
         else:
             print("Too much or too little terms!")
             return self.reshape_and_fill() # Loops function if # of terms doesnt match what should be there
+
+    def replaceArray(self, np_array): ### ap-array would be taken from popping it
+        self.wArray = np_array ### Should just refer to the copied array
 
     def row_swap(self):
         I_row = (int(input("Original Row? ")) - 1)
@@ -109,8 +115,19 @@ def printMatrix():
     printString = printString + "\n]"
     print(printString)
 
+def storeArray():
+    np_array = np.copy(globalMatrix.wArray)
+    matrixStack.append(np_array)
+
+def restorePrevArray():
+    if len(matrixStack) > 0:
+        np_array = matrixStack.pop()
+        globalMatrix.replaceArray(np_array)
+        return true
+    else:
+        return false 
+    
 def start():
-    global globalMatrix
     globalMatrix = makeMatrix()
     printMatrix()
 
