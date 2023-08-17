@@ -2,7 +2,9 @@ import numpy as np
 from collections import deque
 
 global globalMatrix
-global matrixStack = deque() ### Creates a LIFO storing copies of previous arrays
+global matrixStack  ### Creates a LIFO storing copies of previous arrays
+
+matrixStack = deque()
 
 class matrix: 
     # This functions creates matrix
@@ -25,15 +27,33 @@ class matrix:
             print("Too much or too little terms!")
             return self.reshape_and_fill() # Loops function if # of terms doesnt match what should be there
 
-    def replaceArray(self, np_array): ### ap-array would be taken from popping it
-        self.wArray = np_array ### Should just refer to the copied array
+    def replacePrev(self): ### ap-array would be taken from popping it
+        if len(matrixStack) > 0:
+            np_array = matrixStack.pop()
+            self.wArray = np.copy(np_array)
+
+    def storePrev(self):
+        copied_Array = np.copy(self.wArray)
+        matrixStack.append(copied_Array)
+
+    def toString(self):
+        printString = "["
+        nums = self.wArray.shape
+        rows = nums[0]
+        cols = nums[1]
+        for i in range(rows):
+            printString = printString + "\n"
+            for j in range(cols):
+                printString = printString + str(self.wArray[i][j]) + " "
+        printString = printString + "\n]"
+        print(printString)
 
     def row_swap(self):
         I_row = (int(input("Original Row? ")) - 1)
         A_row = (int(input("Row to swap? ")) - 1)
         self.wArray[[I_row, A_row]] = self.wArray[[A_row, I_row]]
         return self.wArray
-    
+
     def col_swap(self): 
         I_column = (int(input("Original column? ")) - 1)
         A_column = (int(input("column to swap? ")) - 1)
@@ -95,7 +115,7 @@ class matrix:
 
 def makeMatrix():
     inputNums = list(map(int, input('Input RxC, Ex: "R C"\n').split()))
-    while len(inputNums) >= 2: # Input validation 
+    while len(inputNums) <= 1: # Input validation 
         inputNums = list(map(int, input('Input RxC, Ex: "R C"\n').split()))
     row, column = inputNums[0], inputNums[1] 
     tempMatrix = matrix(row, column)
@@ -103,32 +123,21 @@ def makeMatrix():
     ### print(tempMatrix.wArray)
     return tempMatrix
 
-def printMatrix():
-    printString = "["
-    nums = globalMatrix.wArray.shape
-    rows = nums[0]
-    cols = nums[1]
-    for i in range(rows):
-        printString = printString + "\n"
-        for j in range(cols):
-            printString = printString + str(globalMatrix.wArray[i][j]) + " "
-    printString = printString + "\n]"
-    print(printString)
+#### TESTING FUNCTIONS
+def printLastInDeque():
+    print(matrixStack.pop())
 
-def storeArray():
-    np_array = np.copy(globalMatrix.wArray)
-    matrixStack.append(np_array)
+def testReplace():
+    globalMatrix = makeMatrix() 
+    globalMatrix.storePrev()
+    print("Added to deque, printing original matrix")
+    globalMatrix.toString()
+    globalMatrix.row_swap()
+    print("changed original matrix, printing deque and original")
+    print("original: \n")
+    globalMatrix.toString()
+    print("\n after revert: \n")
+    globalMatrix.replacePrev()
+    globalMatrix.toString()
 
-def restorePrevArray():
-    if len(matrixStack) > 0:
-        np_array = matrixStack.pop()
-        globalMatrix.replaceArray(np_array)
-        return true
-    else:
-        return false 
-    
-def start():
-    globalMatrix = makeMatrix()
-    printMatrix()
-
-start()
+testReplace()
