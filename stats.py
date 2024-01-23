@@ -19,7 +19,7 @@ class DataSet:
         return answer
 
     def __str__(self) -> str:
-        return f'In.  Val. \n{self.series.to_string(float_format=True)}'
+        return f'In.  Val. \n{self.series.to_string()}'
     
     def __repr__(self) -> str:
         return f'{self.input_list}'
