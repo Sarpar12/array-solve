@@ -6,6 +6,13 @@ class DataSet:
         self.series = pandas.Series(data=num_list, dtype='float',name="Input List", copy=True)
         self.input_list = num_list
 
+    # Missing values currently include the mode, variance
+
+
+    
+    def extra(self):
+        answer = ""
+    
     def advanced(self) -> str:
         return self.series.describe()
 
@@ -34,6 +41,30 @@ def read_input(filename: str) -> [float]:
     return input_series
 
 
+def trigger_case(trigger: str, data: DataSet) -> int:
+    match trigger:
+        case "basic":
+            print(data.basic())
+            return 0
+        case "b":
+            print(data.basic())
+            return 0
+        case "advanced":
+            print(data.advanced())
+            return 0
+        case "a":
+            print(data.advanced())
+            return 0
+        case "string":
+            print(data)
+            return 0
+        case "s":
+            print(data)
+            return 0
+        case _:
+            return -1
+
+
 def main():
     if len(sys.argv) == 2:
         input_filename = sys.argv[1]
@@ -50,13 +81,8 @@ def main():
     data = DataSet(input_list)
     while True:
         u_input = input("Action? ")
-        if u_input == "basic" or u_input == "b":
-            print(data.basic())
-        elif u_input == "advanced" or u_input == "a":
-            print(data.advanced())
-        elif u_input == "str" or u_input == "s":
-            print(data)
-        else:
+        result = trigger_case(u_input, data)
+        if result == -1:
             break
 
 main()
