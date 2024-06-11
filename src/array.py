@@ -1,14 +1,28 @@
 import numpy as np
 from collections import deque
-from typing import Deque
+from typing import Deque, List
 
 class Matrix: 
-    def __init__(self,rows,columns) -> None:
-        self.wArray = np.empty # Create an array with 0 rows and 0 columns
+    def __init__(self,rows: int,columns: int, float_list: List[float] | None) -> None:
+        """
+        creates a Matrix object. If a initial list is not provided, then 
+        the user will be asked for input.
+
+        `params:`
+            rows {int}: the amount of rows in the matrix
+            columns {int}: the amount of columns in the matrix
+            float_list {list[float]}: the initialization list, optional
+        """
+        # TODO: remove additon_buffer and subtraction_buffer
         self.addition_buffer_row_column = np.empty # Used to store multiplicated rows or columns, and then added
         self.subtraction_buffer_row_column = np.empty # Used to store multiplicated rows or columns, and then subtracted
         self.rows = rows 
         self.columns = columns 
+        if float_list is not None:
+            self.wArray = np.array(float_list).reshape(rows, columns)
+        else:
+            self.wArray = np.empty
+            self.reshape_and_fill()
 
     # This Functions does as named
     def reshape_and_fill(self) -> None: 
@@ -26,7 +40,7 @@ class Matrix:
         """
         # Takes Input of "1 2 3"(note the spaces,  this is funcinput), uses map(func, funcinput) to apply int() to funcinput
         # Funcinput is split with " " as the separator and tuns funcinput to ['1', '2', '3']
-        list_of_values = list(map(int, input('Input Matrix values, Ex: "1 2 3"\n').split()))
+        list_of_values = list(map(float, input('Input Matrix values, Ex: "1 2 3"\n').split()))
         if len(list_of_values) == (self.rows * self.columns):
             self.wArray = np.array(list_of_values).reshape(self.rows,self.columns)
             return self.wArray
@@ -192,6 +206,9 @@ class Matrix:
 class MatrixStorage:
     """
     Used to store previous iterations of the matrix
+
+    `params:`
+        input_matrix {Matrix}: a Matrix object, optional
     """
     def __init__(self, input_matrix: Matrix | None):
         self.matrixDeque : Deque[np.ndarray] = deque()        
@@ -215,7 +232,10 @@ class MatrixStorage:
     
     def addMatrix(self, matrix: Matrix | None) -> None:
         """
-        adds a iteration of an ndarray into the deque
+        adds a copy of an iteration of an ndarray into the deque
+
+        `params:`
+            matrix {Matrix}: a instance of the Matrix class
         """
         if matrix is not None:
             self.matrixDeque.append(np.copy(matrix.getArray()))
