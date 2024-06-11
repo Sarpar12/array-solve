@@ -157,6 +157,16 @@ class Matrix:
         """
         return int(np.linalg.det(self.wArray))
     
+    def transpose(self) -> np.ndarray:
+        """
+        transposes the matrix 
+
+        returns:
+            a view of the modified np.ndarray
+        """
+        self.wArray = np.transpose(self.wArray)
+        return self.wArray
+    
     # def inv_finder(): # Will give floats, not sure how to solve
 
     def __str__(self) -> None:
