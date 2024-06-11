@@ -1,14 +1,10 @@
 import numpy as np
 from collections import deque
+from typing import Deque
 
-global globalMatrix
-global matrixStack  ### Creates a LIFO storing copies of previous arrays
-
-matrixStack = deque()
-
-class matrix: 
+class Matrix: 
     # This functions creates matrix
-    def __init__(self,rows,columns):
+    def __init__(self,rows,columns) -> None:
         self.wArray = np.empty # Create an array with 0 rows and 0 columns
         self.addition_buffer_row_column = np.empty # Used to store multiplicated rows or columns, and then added
         self.subtraction_buffer_row_column = np.empty # Used to store multiplicated rows or columns, and then subtracted
@@ -16,7 +12,7 @@ class matrix:
         self.columns = columns 
 
     # This Functions does as named
-    def reshape_and_fill(self): 
+    def reshape_and_fill(self) -> None: 
         # Takes Input of "1 2 3"(note the spaces,  this is funcinput), uses map(func, funcinput) to apply int() to funcinput
         # Funcinput is split with " " as the separator and tuns funcinput to ['1', '2', '3']
         list_of_values = list(map(int, input('Input Matrix values, Ex: "1 2 3"\n').split()))
@@ -27,26 +23,8 @@ class matrix:
             print("Too much or too little terms!")
             return self.reshape_and_fill() # Loops function if # of terms doesnt match what should be there
 
-    def replacePrev(self): ### ap-array would be taken from popping it
-        if len(matrixStack) > 0:
-            np_array = matrixStack.pop()
-            self.wArray = np.copy(np_array)
-
-    def storePrev(self):
-        copied_Array = np.copy(self.wArray)
-        matrixStack.append(copied_Array)
-
-    def toString(self):
-        printString = "["
-        nums = self.wArray.shape
-        rows = nums[0]
-        cols = nums[1]
-        for i in range(rows):
-            printString = printString + "\n"
-            for j in range(cols):
-                printString = printString + str(self.wArray[i][j]) + " "
-        printString = printString + "\n]"
-        print(printString)
+    def getArray(self) -> np.ndarray:
+        return self.wArray
 
     def row_swap(self):
         I_row = (int(input("Original Row? ")) - 1)
@@ -113,12 +91,60 @@ class matrix:
     
     # def inv_finder(): # Will give floats, not sure how to solve
 
+    def __str__(self):
+        printString = "["
+        nums = self.wArray.shape
+        rows = nums[0]
+        cols = nums[1]
+        for i in range(rows):
+            printString = printString + "\n"
+            for j in range(cols):
+                printString = printString + str(self.wArray[i][j]) + " "
+        printString = printString + "\n]"
+        print(printString)
+
+
+# Used for creating and using the matrix deques.
+class MatrixStorage:
+    """
+    Used to store previous iterations of the matrix
+    """
+    def __init__(self, input_matrix: Matrix | None):
+        self.matrixDeque : Deque[np.ndarray] = deque()        
+        if input_matrix is not None:
+            self.matrixDeque.append(input_matrix.getArray())
+
+    def restorePrevMatrix(self) -> np.ndarray:
+        """
+        restores the previous iteration of the array object
+
+        returns:
+            a np.ndarray object
+
+        raises:
+            IndexError if the deque is currently empty
+        """
+        if len(self.matrixDeque) > 0:
+            return self.matrixDeque.pop()
+        else:
+            raise IndexError
+    
+    def addMatrix(self, matrix: Matrix | None) -> None:
+        """
+        adds a iteration of an ndarray into the deque
+        """
+        if matrix is not None:
+            self.matrixDeque.append(np.copy(matrix.getArray()))
+        else:
+            raise ValueError("matrix not found!")
+        
+
 def makeMatrix():
     inputNums = list(map(int, input('Input RxC, Ex: "R C"\n').split()))
     while len(inputNums) <= 1: # Input validation 
         inputNums = list(map(int, input('Input RxC, Ex: "R C"\n').split()))
     row, column = inputNums[0], inputNums[1] 
-    tempMatrix = matrix(row, column)
+    tempMatrix = Matrix(row, column)
     tempMatrix.reshape_and_fill()
     ### print(tempMatrix.wArray)
     return tempMatrix
