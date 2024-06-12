@@ -1,8 +1,14 @@
-import numpy as np
+"""
+contains the classes and functionality used in main.py
+"""
 from collections import deque
 from typing import Deque, List
+import numpy as np
 
-class Matrix: 
+class Matrix:
+    """
+    the matrix class, acts as a wrapper around a np.ndarray object
+    """
     def __init__(self,rows: int,columns: int, float_list: List[float] | None) -> None:
         """
         creates a Matrix object. If a initial list is not provided, then 
@@ -13,15 +19,14 @@ class Matrix:
             columns {int}: the amount of columns in the matrix
             float_list {list[float]}: the initialization list, optional
         """
-        # TODO: remove additon_buffer and subtraction_buffer
-        self.addition_buffer_row_column = np.empty # Used to store multiplicated rows or columns, and then added
-        self.subtraction_buffer_row_column = np.empty # Used to store multiplicated rows or columns, and then subtracted
-        self.rows = rows 
-        self.columns = columns 
+        self.addition_buffer_row_column = np.empty
+        self.subtraction_buffer_row_column = np.empty 
+        self.rows = rows
+        self.columns = columns
         if float_list is not None:
-            self.wArray = np.array(float_list).reshape(rows, columns)
+            self.matrix_array = np.array(float_list).reshape(rows, columns)
         else:
-            self.wArray = np.empty
+            self.matrix_array = np.empty
             self.reshape_and_fill()
 
     # This Functions does as named
@@ -38,21 +43,20 @@ class Matrix:
           3  4
         ]
         """
-        # Takes Input of "1 2 3"(note the spaces,  this is funcinput), uses map(func, funcinput) to apply int() to funcinput
         # Funcinput is split with " " as the separator and tuns funcinput to ['1', '2', '3']
         list_of_values = list(map(float, input('Input Matrix values, Ex: "1 2 3"\n').split()))
         if len(list_of_values) == (self.rows * self.columns):
-            self.wArray = np.array(list_of_values).reshape(self.rows,self.columns)
-            return self.wArray
+            self.matrix_array = np.array(list_of_values).reshape(self.rows,self.columns)
+            return self.matrix_array
         else:
             print("Too much or too little terms!")
-            return self.reshape_and_fill() # Loops function if # of terms doesnt match what should be there
+            return self.reshape_and_fill() # Loops function if # of terms doesnt match
 
-    def getArray(self) -> np.ndarray:
+    def get_array(self) -> np.ndarray:
         """
         getter for the array object
         """
-        return self.wArray
+        return self.matrix_array
 
     def row_swap(self) -> np.ndarray:
         """
@@ -61,10 +65,10 @@ class Matrix:
         Returns:
             the modified np.ndarray object
         """
-        I_row = (int(input("Original Row? ")) - 1)
-        A_row = (int(input("Row to swap? ")) - 1)
-        self.wArray[[I_row, A_row]] = self.wArray[[A_row, I_row]]
-        return self.wArray
+        i_row = int(input("Original Row? ")) - 1
+        a_row = int(input("Row to swap? ")) - 1
+        self.matrix_array[[i_row, a_row]] = self.matrix_array[[a_row, i_row]]
+        return self.matrix_array
 
     def col_swap(self) -> np.ndarray: 
         """
@@ -73,10 +77,10 @@ class Matrix:
         Returns:
             the modified np.ndarray object
         """
-        I_column = (int(input("Original column? ")) - 1)
-        A_column = (int(input("column to swap? ")) - 1)
-        self.wArray[:, [I_column, A_column]] = self.wArray[:, [A_column, I_column]]
-        return self.wArray
+        i_column = int(input("Original column? ")) - 1
+        a_column = int(input("column to swap? ")) - 1
+        self.matrix_array[:, [i_column, a_column]] = self.matrix_array[:, [a_column, i_column]]
+        return self.matrix_array
 
     def multiply_row(self) -> np.ndarray:
         """
@@ -85,10 +89,10 @@ class Matrix:
         Returns:
             the modified np.ndarray object
         """
-        row = (int(input("Which Row? ")) - 1)
-        multiple = (int(input("What Number? ")))
-        self.wArray[row, :] = np.multiply(self.wArray[row, :],multiple) # Yes, you couse use *, but I like this for readablity
-        return self.wArray
+        row = int(input("Which Row? ")) - 1
+        multiple = int(input("What Number? "))
+        self.matrix_array[row, :] = np.multiply(self.matrix_array[row, :],multiple)
+        return self.matrix_array
 
     def multiply_column(self) -> np.ndarray:
         """
@@ -97,26 +101,26 @@ class Matrix:
         Returns:
             the modified np.ndarray object
         """
-        column = (int(input("Which column? ")) - 1)
-        multiple = (int(input("What Number? ")))
-        self.wArray[:, column] = np.multiply(self.wArray[:, column],multiple) # ":" means select all rows or columns depending on where it is placed
-        return self.wArray
-    
-    def row_addition(self) -> np.ndarray: # Might need subarrays, numpy doesnt seem to provide a way to add values within the same matrix
+        column = int(input("Which column? ")) - 1
+        multiple = int(input("What Number? "))
+        self.matrix_array[:, column] = np.multiply(self.matrix_array[:, column],multiple) # ":" means select all rows or columns depending on where it is placed
+        return self.matrix_array
+
+    def row_addition(self) -> np.ndarray: # numpy doesnt seem to provide a way to add values within the same matrix
         """
         adds one row to another
 
         Returns:
             the modified np.ndarray object
         """
-        I_row = (int(input("Row to be added to? ")) - 1)
-        A_row = (int(input("Row added to other row? ")) - 1)
-        A_row_multiple = int(input("What is 2nd row multplied by? "))
-        self.addition_buffer_row_column = np.multiply(self.wArray[A_row, :], A_row_multiple)
-        self.wArray[I_row, :] = np.array([term1 + term2 for term1, term2 in zip(self.wArray[I_row, :], self.addition_buffer_row_column)])
+        i_row = int(input("Row to be added to? ")) - 1
+        a_row = int(input("Row added to other row? ")) - 1
+        a_row_multiple = int(input("What is 2nd row multplied by? "))
+        self.addition_buffer_row_column = np.multiply(self.matrix_array[a_row, :], a_row_multiple)
+        self.matrix_array[i_row, :] = np.array([term1 + term2 for term1, term2 in zip(self.matrix_array[i_row, :], self.addition_buffer_row_column)])
         self.addition_buffer_row_column = np.empty
-        return self.wArray
-    
+        return self.matrix_array
+
     def col_addition(self) -> np.ndarray:
         """
         adds one column to another
@@ -124,13 +128,13 @@ class Matrix:
         Returns:
             the modified np.ndarray object
         """
-        I_col = (int(input("column to be added to? ")) - 1)
-        A_col = (int(input("column added to other column? ")) - 1)
-        A_col_multiple = int(input("What is 2nd column multplied by? "))
-        self.addition_buffer_row_column = np.multiply(self.wArray[:, A_col], A_col_multiple)
-        self.wArray[:, I_col] = np.array([term1 + term2 for term1, term2 in zip(self.wArray[:, I_col], self.addition_buffer_row_column)])
+        i_col = int(input("column to be added to? ")) - 1
+        a_col = int(input("column added to other column? ")) - 1
+        a_col_multiple = int(input("What is 2nd column multplied by? "))
+        self.addition_buffer_row_column = np.multiply(self.matrix_array[:, a_col], a_col_multiple)
+        self.matrix_array[:, i_col] = np.array([term1 + term2 for term1, term2 in zip(self.matrix_array[:, i_col], self.addition_buffer_row_column)])
         self.addition_buffer_row_column = np.empty
-        return self.wArray
+        return self.matrix_array
 
     def row_subtraction(self) -> np.ndarray:
         """
@@ -139,29 +143,29 @@ class Matrix:
         Returns:
             the modified np.ndarray object
         """
-        I_row = (int(input("Row to be subtracted from? ")) - 1)
-        A_row = (int(input("Row used to subtract? ")) - 1)
-        A_row_multiple = int(input("What is 2nd row multplied by? "))
-        self.subtraction_buffer_row_column = np.multiply(self.wArray[A_row, :], A_row_multiple)
-        self.wArray[I_row, :] = np.array([term1 - term2 for term1, term2 in zip(self.wArray[I_row, :], self.subtraction_buffer_row_column)])
+        i_row = int(input("Row to be subtracted from? ")) - 1
+        a_row = int(input("Row used to subtract? ")) - 1
+        a_row_multiple = int(input("What is 2nd row multplied by? "))
+        self.subtraction_buffer_row_column = np.multiply(self.matrix_array[a_row, :], a_row_multiple)
+        self.matrix_array[i_row, :] = np.array([term1 - term2 for term1, term2 in zip(self.matrix_array[i_row, :], self.subtraction_buffer_row_column)])
         self.subtraction_buffer_row_column = np.empty
-        return self.wArray
-    
-    def col_subtraction(self) -> np.ndarray: 
+        return self.matrix_array
+
+    def col_subtraction(self) -> np.ndarray:
         """
         subtracts one column from another
 
         Returns:
             the modified np.ndarray object
         """
-        I_col = (int(input("column to be subtracted from? ")) - 1)
-        A_col = (int(input("column used to subtract? ")) - 1)
-        A_col_multiple = int(input("What is 2nd col multplied by? "))
-        self.subtraction_buffer_row_column = np.multiply(self.wArray[:, A_col], A_col_multiple)
-        self.wArray[:, I_col] = np.array([term1 - term2 for term1, term2 in zip(self.wArray[:, I_col], self.subtraction_buffer_row_column)])
+        i_col = int(input("column to be subtracted from? ")) - 1
+        a_col = int(input("column used to subtract? ")) - 1
+        a_col_multiple = int(input("What is 2nd col multplied by? "))
+        self.subtraction_buffer_row_column = np.multiply(self.matrix_array[:, a_col], a_col_multiple)
+        self.matrix_array[:, i_col] = np.array([term1 - term2 for term1, term2 in zip(self.matrix_array[:, i_col], self.subtraction_buffer_row_column)])
         self.subtraction_buffer_row_column = np.empty
-        return self.wArray
-    
+        return self.matrix_array
+
     def deter_finder(self) -> float:
         """
         Finds the determinant of the given np.ndarray object
@@ -169,8 +173,8 @@ class Matrix:
         returns:
             the determinant, as a float
         """
-        return int(np.linalg.det(self.wArray))
-    
+        return float(np.linalg.det(self.matrix_array))
+
     def transpose(self) -> np.ndarray:
         """
         transposes the matrix 
@@ -178,28 +182,14 @@ class Matrix:
         returns:
             a view of the modified np.ndarray
         """
-        self.wArray = np.transpose(self.wArray)
-        return self.wArray
-    
-    # TODO: Add adjoint of a matrix
-    
-    # def inv_finder(): # Will give floats, not sure how to solve
+        self.matrix_array = np.transpose(self.matrix_array)
+        return self.matrix_array 
 
-    def __str__(self) -> None:
+    def __str__(self) -> str:
         """
         prints a string representation of the ndarray object
         """
-        print(np.array2string(self.wArray))
-        # printString = "["
-        # nums = self.wArray.shape
-        # rows = nums[0]
-        # cols = nums[1]
-        # for i in range(rows):
-        #     printString = printString + "\n"
-        #     for j in range(cols):
-        #         printString = printString + str(self.wArray[i][j]) + " "
-        # printString = printString + "\n]"
-        # print(printString)
+        return np.array2string(self.matrix_array)
 
 
 # Used for creating and using the matrix deques.
@@ -210,12 +200,12 @@ class MatrixStorage:
     `params:`
         input_matrix {Matrix}: a Matrix object, optional
     """
-    def __init__(self, input_matrix: Matrix | None):
-        self.matrixDeque : Deque[np.ndarray] = deque()        
+    def __init__(self, input_matrix: Matrix | None = None):
+        self.matrix_deque : Deque[np.ndarray] = deque()
         if input_matrix is not None:
-            self.matrixDeque.append(input_matrix.getArray())
+            self.matrix_deque.append(input_matrix.get_array())
 
-    def restorePrevMatrix(self) -> np.ndarray:
+    def restore_prev_matrix(self) -> np.ndarray:
         """
         restores the previous iteration of the array object
 
@@ -225,12 +215,12 @@ class MatrixStorage:
         raises:
             IndexError if the deque is currently empty
         """
-        if len(self.matrixDeque) > 0:
-            return self.matrixDeque.pop()
+        if len(self.matrix_deque) > 0:
+            return self.matrix_deque.pop()
         else:
             raise IndexError
-    
-    def addMatrix(self, matrix: Matrix | None) -> None:
+
+    def add_matrix(self, matrix: Matrix | None = None) -> None:
         """
         adds a copy of an iteration of an ndarray into the deque
 
@@ -238,6 +228,6 @@ class MatrixStorage:
             matrix {Matrix}: a instance of the Matrix class
         """
         if matrix is not None:
-            self.matrixDeque.append(np.copy(matrix.getArray()))
+            self.matrix_deque.append(np.copy(matrix.get_array()))
         else:
             raise ValueError("matrix not found!")
