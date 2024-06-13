@@ -54,6 +54,21 @@ def create_storage(matrix: Matrix | None = None) -> MatrixStorage:
         return matrix_stack
     else:
         return MatrixStorage()
+    
+def display_matrices(matrix_list : List[Matrix])  -> None:
+    """
+    displays the matrices in matrix_list, either in full or a preview, depending on the length
+
+    `params:` 
+        matrix_list {List[Matrix]} : a list of Matrix objects
+    """
+    for index, matrix in enumerate(matrix_list):
+        m_row = matrix.rows
+        m_col = matrix.columns
+        if m_row < 16 and m_col < 16:
+            print(f"Matrix Index {index}: {matrix}")
+        else:
+            print(f"Matrix Index {index}: {matrix[0:16]}")
 
 # def do_operation(matrix : Matrix, matrix_stack : MatrixStorage, operation_value : int) -> None:
 #     """
@@ -109,6 +124,13 @@ def main():
                 elif len(input_matrix_dim) == 3:
                     new_matrix : Matrix = create_matrix(int(input_matrix_dim[0]), int(input_matrix_dim[1]), input_matrix_dim[2])
                 matrix_list.append(new_matrix)
+            case 1:
+                display_matrices(matrix_list)
+                matrix_index : int = int(input("Which matrix?"))
+                try:
+                    selected_matrix = matrix_list[matrix_index]
+                except IndexError:
+                    print(f"Selected Index {selected_matrix} isn't in the list!")
         # try:
         #     do_operation(matrix, matrix_stack, input_val)
         # except ValueError:
