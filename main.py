@@ -1,10 +1,13 @@
-from src.array import Matrix, MatrixStorage
+"""
+Contains the main implementation of the program
+"""
 import sys
 from typing import List
+from src.array import Matrix, MatrixStorage, MatrixWrapper
 
-def create_matrix(rows: int | None = None, cols: int | None = None, filename: str | None = None) -> Matrix:
+def create_matrix_wrapper(rows: int | None = None, cols: int | None = None, filename: str | None = None) -> MatrixWrapper:
     """
-    Creates a matrix. If a filename is specified, reads from that file.
+    Creates a MatrixWrapper. If a filename is specified, reads from that file.
     If not, user input will be read in and converted. For example:
 
     ```python
@@ -37,38 +40,24 @@ def create_matrix(rows: int | None = None, cols: int | None = None, filename: st
             raise SyntaxError("Rows and columns must be specified for manual input.")
         matrix_values : List[str] = input("Enter the matrix values separated by spaces:\n").split()
         float_list = [float(num) for num in matrix_values]
-    return Matrix(rows, cols, float_list)
+    matrix = Matrix(rows, cols, float_list)
+    matrix_stack = MatrixStorage(matrix)
+    return MatrixWrapper(matrix, matrix_stack) 
 
-def create_storage(matrix: Matrix | None = None) -> MatrixStorage:
-    """
-    Creates a matrix stack
-
-    `params:` 
-        matrix: a Matrix object, optional    
-
-    `returns:`
-        a MatrixStorage object
-    """
-    if matrix is not None:
-        matrix_stack = MatrixStorage(matrix)
-        return matrix_stack
-    else:
-        return MatrixStorage()
-    
-def display_matrices(matrix_list : List[Matrix])  -> None:
+def display_matrices(matrix_wrapper_list : List[MatrixWrapper])  -> None:
     """
     displays the matrices in matrix_list, either in full or a preview, depending on the length
 
     `params:` 
         matrix_list {List[Matrix]} : a list of Matrix objects
     """
-    for index, matrix in enumerate(matrix_list):
-        m_row = matrix.rows
-        m_col = matrix.columns
+    for index, matrix_wrapper in enumerate(matrix_wrapper_list):
+        m_row = matrix_wrapper.matrix.rows
+        m_col = matrix_wrapper.matrix.columns
         if m_row < 16 and m_col < 16:
-            print(f"Matrix Index {index}: {matrix}")
+            print(f"Matrix Index {index}: {matrix_wrapper}")
         else:
-            print(f"Matrix Index {index}: {matrix[0:16]}")
+            print(f"Matrix Index {index}: {matrix_wrapper[0:16]}")
 
 # def do_operation(matrix : Matrix, matrix_stack : MatrixStorage, operation_value : int) -> None:
 #     """
@@ -93,12 +82,11 @@ def main():
         print("python main.py <rows> <count> <filename | Optional>")
         exit(1)
     elif len(sys.argv) == 3:
-        matrix : Matrix = create_matrix(int(sys.argv[1]), int(sys.argv[2]))
+        matrix_wrapper : MatrixWrapper = create_matrix_wrapper(int(sys.argv[1]), int(sys.argv[2]))
     else:
-        matrix : Matrix = create_matrix(int(sys.argv[1]), int(sys.argv[2]), sys.argv(3))
-    matrix_list : List[Matrix] = [].append(matrix)
-    selected_matrix : Matrix = matrix_list[0]
-    matrix_stack : MatrixStorage = create_storage(None)
+        matrix_wrapper : MatrixWrapper = create_matrix_wrapper(int(sys.argv[1]), int(sys.argv[2]), sys.argv(3))
+    matrix_wrapper_list : List[MatrixWrapper] = [].append(matrix_wrapper)
+    selected_matrix : MatrixWrapper = matrix_wrapper_list[0]
     while True:
         input_val : int = int(input(
         """
@@ -118,17 +106,17 @@ def main():
             case 0:
                 input_matrix_dim : str = input("Please enter <row> <col> <filename | Optional>")
                 if len(input_matrix_dim == 1):
-                    new_matrix : Matrix = create_matrix(input_matrix_dim)
+                    new_matrix : MatrixWrapper = create_matrix_wrapper(input_matrix_dim)
                 elif len(input_matrix_dim) == 2:
-                    new_matrix : Matrix = create_matrix(int(input_matrix_dim[0]), int(input_matrix_dim[1]))
+                    new_matrix : MatrixWrapper = create_matrix_wrapper(int(input_matrix_dim[0]), int(input_matrix_dim[1]))
                 elif len(input_matrix_dim) == 3:
-                    new_matrix : Matrix = create_matrix(int(input_matrix_dim[0]), int(input_matrix_dim[1]), input_matrix_dim[2])
-                matrix_list.append(new_matrix)
+                    new_matrix : MatrixWrapper = create_matrix_wrapper(int(input_matrix_dim[0]), int(input_matrix_dim[1]), input_matrix_dim[2])
+                matrix_wrapper_list.append(new_matrix)
             case 1:
-                display_matrices(matrix_list)
+                display_matrices(matrix_wrapper_list)
                 matrix_index : int = int(input("Which matrix?"))
                 try:
-                    selected_matrix = matrix_list[matrix_index]
+                    selected_matrix = matrix_wrapper_list[matrix_index]
                 except IndexError:
                     print(f"Selected Index {selected_matrix} isn't in the list!")
         # try:
