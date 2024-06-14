@@ -4,6 +4,7 @@ contains the classes and functionality used in main.py
 from collections import deque
 from typing import Deque, List
 import numpy as np
+from dataclasses import dataclass
 
 class Matrix:
     """
@@ -231,3 +232,18 @@ class MatrixStorage:
             self.matrix_deque.append(np.copy(matrix.get_array()))
         else:
             raise ValueError("matrix not found!")
+
+@dataclass
+class MatrixWrapper():
+    """
+    dataclass used to store a matrix and it's corresponding matrixStorage class
+    """
+    def __init__(self, matrix : Matrix, stack : MatrixStorage):
+        self.matrix = matrix
+        self.stack = stack
+    
+    def __str__(self):
+        """
+        prints the original matrix only
+        """
+        return self.matrix.__str__()
