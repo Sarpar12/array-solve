@@ -59,20 +59,56 @@ def display_matrices(matrix_wrapper_list : List[MatrixWrapper])  -> None:
         else:
             print(f"Matrix Index {index}: {matrix_wrapper[0:16]}")
 
-# def do_operation(matrix : Matrix, matrix_stack : MatrixStorage, operation_value : int) -> None:
-#     """
-#     Does the specified operation found in main()
+def do_operation(matrix_wrapper : MatrixWrapper, operation_value : int) -> None:
+    """
+    Does the specified operation found in main()
 
-#     `params:` 
-#         matrix {Matrix} : a Matrix object
-#         operation_value {int} : a int
-#         matrix_stack {MatrixStorage} : a MatrixStorage object
+    `params:` 
+        matrix {Matrix} : a Matrix object
+        operation_value {int} : a int
+        matrix_stack {MatrixStorage} : a MatrixStorage object
 
-#     `raises:`
-#         ValueError if a operation_value isn't found
-#     """
-#     match operation_value:
-#         case 1:
+    `raises:`
+        ValueError if a operation_value isn't found
+    """
+    m_stack : MatrixStorage = matrix_wrapper.stack
+    matrix : Matrix = matrix_wrapper
+    match operation_value:
+        case 2:
+            # Undoes an operation
+            matrix.set_array(m_stack.get_prev_matrix())
+            return
+        case 3:
+            # Multiplies a row
+            matrix.multiply_row()
+            return
+        case 4:
+            # Multiples a colum
+            matrix.multiply_column()
+            return
+        case 5:
+            # Adds one row to another
+            matrix.row_addition()
+            return
+        case 6:
+            # Adds one column to another
+            matrix.col_addition()
+            return
+        case 7:
+            # Subtract one row from another
+            matrix.row_subtraction()
+            return
+        case 8:
+            # subtracts one col from another
+            matrix.col_subtraction()
+            return
+        case 9: 
+            # transposes the matrix
+            matrix.transpose()
+            return
+        case 10:
+            # Finds determinant
+            print(f"Determinant: {matrix.deter_finder()}")
 
 def main():
     """
@@ -119,10 +155,13 @@ def main():
                     selected_matrix = matrix_wrapper_list[matrix_index]
                 except IndexError:
                     print(f"Selected Index {selected_matrix} isn't in the list!")
-        # try:
-        #     do_operation(matrix, matrix_stack, input_val)
-        # except ValueError:
-        #     print(f"That operation ({input_val}) isn't supported!")
+            case _:
+                break
+        try:
+            do_operation(selected_matrix, input_val)
+        except ValueError:
+            print(f"That operation ({input_val}) isn't supported!")
+        print(selected_matrix)
 
 if __name__ == "__main__":
     main()

@@ -2,9 +2,9 @@
 contains the classes and functionality used in main.py
 """
 from collections import deque
+from dataclasses import dataclass
 from typing import Deque, List
 import numpy as np
-from dataclasses import dataclass
 
 class Matrix:
     """
@@ -31,7 +31,7 @@ class Matrix:
             self.reshape_and_fill()
 
     # This Functions does as named
-    def reshape_and_fill(self) -> None: 
+    def reshape_and_fill(self) -> None:
         """
         Takes an input and converts into an np.ndarray with the right dimensions
 
@@ -58,6 +58,12 @@ class Matrix:
         getter for the array object
         """
         return self.matrix_array
+    
+    def set_array(self, array : np.ndarray):
+        """
+        sets the array containing the matrix to a new array
+        """
+        self.matrix_array = array
 
     def row_swap(self) -> np.ndarray:
         """
@@ -204,9 +210,9 @@ class MatrixStorage:
     def __init__(self, input_matrix: Matrix | None = None):
         self.matrix_deque : Deque[np.ndarray] = deque()
         if input_matrix is not None:
-            self.matrix_deque.append(input_matrix.get_array())
+            self.matrix_deque.append(np.copy(input_matrix.get_array()))
 
-    def restore_prev_matrix(self) -> np.ndarray:
+    def get_prev_matrix(self) -> np.ndarray:
         """
         restores the previous iteration of the array object
 
