@@ -59,6 +59,7 @@ def display_matrices(matrix_wrapper_list : List[MatrixWrapper])  -> None:
         else:
             print(f"Matrix Index {index}: {matrix_wrapper[0:16]}")
 
+# pylint: disable=R0911
 def do_operation(matrix_wrapper : MatrixWrapper, operation_value : int) -> None:
     """
     Does the specified operation found in main()
@@ -120,8 +121,8 @@ def main():
     elif len(sys.argv) == 3:
         matrix_wrapper : MatrixWrapper = create_matrix_wrapper(int(sys.argv[1]), int(sys.argv[2]))
     else:
-        matrix_wrapper : MatrixWrapper = create_matrix_wrapper(int(sys.argv[1]), 
-                                                               int(sys.argv[2]), 
+        matrix_wrapper : MatrixWrapper = create_matrix_wrapper(int(sys.argv[1]),
+                                                               int(sys.argv[2]),
                                                                sys.argv(3))
     matrix_wrapper_list : List[MatrixWrapper] = []
     matrix_wrapper_list.append(matrix_wrapper)
@@ -148,11 +149,11 @@ def main():
                 if len(input_matrix_dim == 1):
                     new_matrix : MatrixWrapper = create_matrix_wrapper(input_matrix_dim)
                 elif len(input_matrix_dim) == 2:
-                    new_matrix : MatrixWrapper = create_matrix_wrapper(int(input_matrix_dim[0]), 
+                    new_matrix : MatrixWrapper = create_matrix_wrapper(int(input_matrix_dim[0]),
                                                                        int(input_matrix_dim[1]))
                 elif len(input_matrix_dim) == 3:
-                    new_matrix : MatrixWrapper = create_matrix_wrapper(int(input_matrix_dim[0]), 
-                                                                       int(input_matrix_dim[1]), 
+                    new_matrix : MatrixWrapper = create_matrix_wrapper(int(input_matrix_dim[0]),
+                                                                       int(input_matrix_dim[1]),
                                                                        input_matrix_dim[2])
                 matrix_wrapper_list.append(new_matrix)
             case 1:
