@@ -47,16 +47,15 @@ class Matrix:
         if len(list_of_values) == (self.rows * self.columns):
             self.matrix_array = np.array(list_of_values).reshape(self.rows,self.columns)
             return self.matrix_array
-        else:
-            print("Too much or too little terms!")
-            return self.reshape_and_fill() # Loops function if # of terms doesnt match
+        print("Too much or too little terms!")
+        return self.reshape_and_fill() # Loops function if # of terms doesnt match
 
     def get_array(self) -> np.ndarray:
         """
         getter for the array object
         """
         return self.matrix_array
-    
+
     def set_array(self, array : np.ndarray):
         """
         sets the array containing the matrix to a new array
@@ -75,7 +74,7 @@ class Matrix:
         self.matrix_array[[i_row, a_row]] = self.matrix_array[[a_row, i_row]]
         return self.matrix_array
 
-    def col_swap(self) -> np.ndarray: 
+    def col_swap(self) -> np.ndarray:
         """
         swaps two cols and returns the new np.ndarray object
 
@@ -111,7 +110,7 @@ class Matrix:
         self.matrix_array[:, column] = self.matrix_array[:, column] * multiple
         return self.matrix_array
 
-    def row_addition(self) -> np.ndarray: # numpy doesnt seem to provide a way to add values within the same matrix
+    def row_addition(self) -> np.ndarray:
         """
         adds one row to another
 
@@ -121,7 +120,7 @@ class Matrix:
         i_row = int(input("Row to be added to? ")) - 1
         a_row = int(input("Row added to other row? ")) - 1
         a_row_multiple = int(input("What is 2nd row multplied by? "))
-        self.matrix_array[i_row, :] += (self.matrix_array[a_row, :] * a_row_multiple) 
+        self.matrix_array[i_row, :] += (self.matrix_array[a_row, :] * a_row_multiple)
         return self.matrix_array
 
     def col_addition(self) -> np.ndarray:
@@ -147,7 +146,7 @@ class Matrix:
         i_row = int(input("Row to be subtracted from? ")) - 1
         a_row = int(input("Row used to subtract? ")) - 1
         a_row_multiple = int(input("What is 2nd row multplied by? "))
-        self.matrix_array[i_row, :] -= (self.matrix_array[a_row, :] * a_row_multiple) 
+        self.matrix_array[i_row, :] -= (self.matrix_array[a_row, :] * a_row_multiple)
         return self.matrix_array
 
     def col_subtraction(self) -> np.ndarray:
@@ -214,8 +213,7 @@ class MatrixStorage:
         """
         if len(self.matrix_deque) > 0:
             return self.matrix_deque.pop()
-        else:
-            raise IndexError
+        raise IndexError
 
     def add_matrix(self, matrix: Matrix | None = None) -> None:
         """

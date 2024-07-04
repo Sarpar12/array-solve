@@ -5,7 +5,7 @@ import sys
 from typing import List
 from src.array import Matrix, MatrixStorage, MatrixWrapper
 
-def create_matrix_wrapper(rows: int | None = None, cols: int | None = None, filename: str | None = None) -> MatrixWrapper:
+def create_matrix_wrapper(rows = None, cols = None, filename: str | None = None) -> MatrixWrapper:
     """
     Creates a MatrixWrapper. If a filename is specified, reads from that file.
     If not, user input will be read in and converted. For example:
@@ -42,7 +42,7 @@ def create_matrix_wrapper(rows: int | None = None, cols: int | None = None, file
         float_list = [float(num) for num in matrix_values]
     matrix = Matrix(rows, cols, float_list)
     matrix_stack = MatrixStorage(matrix)
-    return MatrixWrapper(matrix, matrix_stack) 
+    return MatrixWrapper(matrix, matrix_stack)
 
 def display_matrices(matrix_wrapper_list : List[MatrixWrapper])  -> None:
     """
@@ -102,7 +102,7 @@ def do_operation(matrix_wrapper : MatrixWrapper, operation_value : int) -> None:
             # subtracts one col from another
             matrix.col_subtraction()
             return
-        case 9: 
+        case 9:
             # transposes the matrix
             matrix.transpose()
             return
@@ -116,13 +116,14 @@ def main():
     """
     if len(sys.argv) != 3 and len(sys.argv) != 4:
         print("python main.py <rows> <count> <filename | Optional>")
-        exit(1)
+        sys.exit(1)
     elif len(sys.argv) == 3:
         matrix_wrapper : MatrixWrapper = create_matrix_wrapper(int(sys.argv[1]), int(sys.argv[2]))
     else:
-        matrix_wrapper : MatrixWrapper = create_matrix_wrapper(int(sys.argv[1]), int(sys.argv[2]), sys.argv(3))
-    print(matrix_wrapper)
-    matrix_wrapper_list : List[MatrixWrapper] = list()
+        matrix_wrapper : MatrixWrapper = create_matrix_wrapper(int(sys.argv[1]), 
+                                                               int(sys.argv[2]), 
+                                                               sys.argv(3))
+    matrix_wrapper_list : List[MatrixWrapper] = []
     matrix_wrapper_list.append(matrix_wrapper)
     selected_matrix : MatrixWrapper = matrix_wrapper_list[0]
     while True:
@@ -143,12 +144,16 @@ def main():
         match input_val:
             case 0:
                 input_matrix_dim : str = input("Please enter <row> <col> <filename | Optional>")
+                new_matrix = None
                 if len(input_matrix_dim == 1):
                     new_matrix : MatrixWrapper = create_matrix_wrapper(input_matrix_dim)
                 elif len(input_matrix_dim) == 2:
-                    new_matrix : MatrixWrapper = create_matrix_wrapper(int(input_matrix_dim[0]), int(input_matrix_dim[1]))
+                    new_matrix : MatrixWrapper = create_matrix_wrapper(int(input_matrix_dim[0]), 
+                                                                       int(input_matrix_dim[1]))
                 elif len(input_matrix_dim) == 3:
-                    new_matrix : MatrixWrapper = create_matrix_wrapper(int(input_matrix_dim[0]), int(input_matrix_dim[1]), input_matrix_dim[2])
+                    new_matrix : MatrixWrapper = create_matrix_wrapper(int(input_matrix_dim[0]), 
+                                                                       int(input_matrix_dim[1]), 
+                                                                       input_matrix_dim[2])
                 matrix_wrapper_list.append(new_matrix)
             case 1:
                 display_matrices(matrix_wrapper_list)
