@@ -121,7 +121,9 @@ def main():
         matrix_wrapper : MatrixWrapper = create_matrix_wrapper(int(sys.argv[1]), int(sys.argv[2]))
     else:
         matrix_wrapper : MatrixWrapper = create_matrix_wrapper(int(sys.argv[1]), int(sys.argv[2]), sys.argv(3))
-    matrix_wrapper_list : List[MatrixWrapper] = [].append(matrix_wrapper)
+    print(matrix_wrapper)
+    matrix_wrapper_list : List[MatrixWrapper] = list()
+    matrix_wrapper_list.append(matrix_wrapper)
     selected_matrix : MatrixWrapper = matrix_wrapper_list[0]
     while True:
         input_val : int = int(input(

@@ -20,8 +20,6 @@ class Matrix:
             columns {int}: the amount of columns in the matrix
             float_list {list[float]}: the initialization list, optional
         """
-        self.addition_buffer_row_column = np.empty
-        self.subtraction_buffer_row_column = np.empty 
         self.rows = rows
         self.columns = columns
         if float_list is not None:
@@ -98,7 +96,7 @@ class Matrix:
         """
         row = int(input("Which Row? ")) - 1
         multiple = int(input("What Number? "))
-        self.matrix_array[row, :] = np.multiply(self.matrix_array[row, :],multiple)
+        self.matrix_array[row, :] = self.matrix_array[row, :] * multiple
         return self.matrix_array
 
     def multiply_column(self) -> np.ndarray:
@@ -110,7 +108,7 @@ class Matrix:
         """
         column = int(input("Which column? ")) - 1
         multiple = int(input("What Number? "))
-        self.matrix_array[:, column] = np.multiply(self.matrix_array[:, column],multiple) # ":" means select all rows or columns depending on where it is placed
+        self.matrix_array[:, column] = self.matrix_array[:, column] * multiple
         return self.matrix_array
 
     def row_addition(self) -> np.ndarray: # numpy doesnt seem to provide a way to add values within the same matrix
@@ -123,9 +121,7 @@ class Matrix:
         i_row = int(input("Row to be added to? ")) - 1
         a_row = int(input("Row added to other row? ")) - 1
         a_row_multiple = int(input("What is 2nd row multplied by? "))
-        self.addition_buffer_row_column = np.multiply(self.matrix_array[a_row, :], a_row_multiple)
-        self.matrix_array[i_row, :] = np.array([term1 + term2 for term1, term2 in zip(self.matrix_array[i_row, :], self.addition_buffer_row_column)])
-        self.addition_buffer_row_column = np.empty
+        self.matrix_array[i_row, :] += (self.matrix_array[a_row, :] * a_row_multiple) 
         return self.matrix_array
 
     def col_addition(self) -> np.ndarray:
@@ -138,9 +134,7 @@ class Matrix:
         i_col = int(input("column to be added to? ")) - 1
         a_col = int(input("column added to other column? ")) - 1
         a_col_multiple = int(input("What is 2nd column multplied by? "))
-        self.addition_buffer_row_column = np.multiply(self.matrix_array[:, a_col], a_col_multiple)
-        self.matrix_array[:, i_col] = np.array([term1 + term2 for term1, term2 in zip(self.matrix_array[:, i_col], self.addition_buffer_row_column)])
-        self.addition_buffer_row_column = np.empty
+        self.matrix_array[:, i_col] += (self.matrix_array[:, a_col] * a_col_multiple)
         return self.matrix_array
 
     def row_subtraction(self) -> np.ndarray:
@@ -153,9 +147,7 @@ class Matrix:
         i_row = int(input("Row to be subtracted from? ")) - 1
         a_row = int(input("Row used to subtract? ")) - 1
         a_row_multiple = int(input("What is 2nd row multplied by? "))
-        self.subtraction_buffer_row_column = np.multiply(self.matrix_array[a_row, :], a_row_multiple)
-        self.matrix_array[i_row, :] = np.array([term1 - term2 for term1, term2 in zip(self.matrix_array[i_row, :], self.subtraction_buffer_row_column)])
-        self.subtraction_buffer_row_column = np.empty
+        self.matrix_array[i_row, :] -= (self.matrix_array[a_row, :] * a_row_multiple) 
         return self.matrix_array
 
     def col_subtraction(self) -> np.ndarray:
@@ -168,9 +160,7 @@ class Matrix:
         i_col = int(input("column to be subtracted from? ")) - 1
         a_col = int(input("column used to subtract? ")) - 1
         a_col_multiple = int(input("What is 2nd col multplied by? "))
-        self.subtraction_buffer_row_column = np.multiply(self.matrix_array[:, a_col], a_col_multiple)
-        self.matrix_array[:, i_col] = np.array([term1 - term2 for term1, term2 in zip(self.matrix_array[:, i_col], self.subtraction_buffer_row_column)])
-        self.subtraction_buffer_row_column = np.empty
+        self.matrix_array[:, i_col] -= (self.matrix_array[:, a_col] * a_col_multiple)
         return self.matrix_array
 
     def deter_finder(self) -> float:
@@ -190,7 +180,7 @@ class Matrix:
             a view of the modified np.ndarray
         """
         self.matrix_array = np.transpose(self.matrix_array)
-        return self.matrix_array 
+        return self.matrix_array
 
     def __str__(self) -> str:
         """
@@ -247,7 +237,7 @@ class MatrixWrapper():
     def __init__(self, matrix : Matrix, stack : MatrixStorage):
         self.matrix = matrix
         self.stack = stack
-    
+
     def __str__(self):
         """
         prints the original matrix only
