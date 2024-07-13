@@ -137,6 +137,17 @@ class TestMatrix(unittest.TestCase):
         cofactor_matrix = self.matrix.cofactor_matrix()
         expected_matrix = np.array([[-24, 20, -5], [18, -15, 4], [5, -4, 1]])
         np.testing.assert_array_almost_equal(cofactor_matrix, expected_matrix)
+        
+    def test_adjoint_matrix(self):
+        """
+        tests the adjoint_matrix() function
+        """
+        print("Testing adjoint matrix:")
+        org_matrix = Matrix(3, 3, [1, 2, 3, 4, 5, 6, 7, 1, 9])
+        result_matrix = org_matrix.adjoint_matrix()
+        expected_matrix = np.array([[39, -15, -3], [6, -12, 6], [-31, 13, -3]])
+        np.testing.assert_array_almost_equal(result_matrix, expected_matrix)
+        
 
 if __name__ == '__main__':
     unittest.main()
