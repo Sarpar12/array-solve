@@ -53,7 +53,7 @@ class TestMatrix(unittest.TestCase):
         """
         print("Testing Row Addition")
         self.matrix.row_addition()
-        expected_array = np.array([[1, 8, 15], [4, 5, 6], [7, 8, 9]])
+        expected_array = np.array([[13, 17, 21], [4, 5, 6], [7, 8, 9]])
         np.testing.assert_array_equal(self.matrix.get_array(), expected_array)
         reset_matrix(self.matrix)
 
@@ -64,7 +64,7 @@ class TestMatrix(unittest.TestCase):
         """
         print("Testing Column Addition")
         self.matrix.col_addition()
-        expected_array = np.array([[1, 7, 3], [4, 16, 6], [7, 25, 9]])
+        expected_array = np.array([[5, 2, 3], [14, 5, 6], [23, 8, 9]])
         np.testing.assert_array_equal(self.matrix.get_array(), expected_array)
         reset_matrix(self.matrix)
 
@@ -86,7 +86,7 @@ class TestMatrix(unittest.TestCase):
         """
         print("Testing Column Subtraction")
         self.matrix.col_subtraction()
-        expected_array = np.array([[-3, 2, 3], [-10, 5, 6], [-17, 8, 9]])
+        expected_array = np.array([[-3, 2, 3], [-6, 5, 6], [-9, 8, 9]])
         np.testing.assert_array_equal(self.matrix.get_array(), expected_array)
         reset_matrix(self.matrix)
 
@@ -96,7 +96,7 @@ class TestMatrix(unittest.TestCase):
         """
         print("Testing Determinant of 3x3")
         expected_det = np.linalg.det(np.array([[1, 2, 3], [0, 1, 4], [5, 6, 0]]))
-        result_det = self.matrix.deter_finder()
+        result_det = Matrix(3, 3, [1, 2, 3, 0, 1, 4, 5, 6, 0]).deter_finder()
         self.assertAlmostEqual(result_det, expected_det, msg="Determinant of matrix is incorrect.")
 
     def test_determinant_singular_matrix(self):
@@ -125,8 +125,8 @@ class TestMatrix(unittest.TestCase):
         print("Testing cofactor of an index")
         self.matrix.set_array(np.array([[1, 2, 3], [0, 1, 4], [5, 6, 0]]))
         cofactor = self.matrix.cofactor_index(1, 1)  # Cofactor of the first element
-        expected_cofactor = -24  # Calculated using minor and cofactor definition
-        self.assertEqual(cofactor, expected_cofactor)
+        expected_cofactor = float(-24)  # Calculated using minor and cofactor definition
+        self.assertAlmostEqual(cofactor, expected_cofactor)
 
     def test_cofactor_matrix(self):
         """
@@ -135,7 +135,7 @@ class TestMatrix(unittest.TestCase):
         print("Testing cofactor matrix")
         self.matrix.set_array(np.array([[1, 2, 3], [0, 1, 4], [5, 6, 0]]))
         cofactor_matrix = self.matrix.cofactor_matrix()
-        expected_matrix = np.array([[-24, 20, -5], [18, -15, 4], [5, -2, 1]])
+        expected_matrix = np.array([[-24, 20, -5], [18, -15, 4], [5, -4, 1]])
         np.testing.assert_array_almost_equal(cofactor_matrix, expected_matrix)
 
 if __name__ == '__main__':

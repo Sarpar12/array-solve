@@ -169,7 +169,7 @@ class Matrix:
         returns:
             the determinant, as a float
         """
-        return float(np.linalg.det(self.matrix_array))
+        return np.linalg.det(self.matrix_array)
 
     def transpose(self) -> np.ndarray:
         """
