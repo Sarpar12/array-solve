@@ -4,9 +4,15 @@
 # Python
 *pycache*
 
+# pytest
+*pytest_cache*
+
 # Testing Folders
 Testing*
 /Testing
 
 # Conda
 *conda
+
+# Venv
+*venv*
