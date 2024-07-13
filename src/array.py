@@ -178,8 +178,39 @@ class Matrix:
         returns:
             a view of the modified np.ndarray
         """
-        self.matrix_array = np.transpose(self.matrix_array)
+        self.matrix_array = self.matrix_array.T
         return self.matrix_array
+
+    def cofactor_index(self, row: int, col: int) -> float:
+        """
+        finds the cofactor of an specified index 
+
+        `params:`
+            row: the row, 1-indexed
+            col: the column, 1-indexed
+        
+        `returns:` 
+            float: the cofactor of the specified index
+        """
+        return self.cofactor_matrix()[row - 1, col - 1]
+
+    def cofactor_matrix(self) -> np.ndarray | None:
+        """
+        finds the cofactor matrix of the current matrix
+
+        `returns:`
+            np.ndarray the cofactor matrix
+        """
+        try:
+            determinant = self.deter_finder()
+            if determinant != 0:
+                # .T returns the tranpose
+                return np.linalg.inv(self.matrix_array).T * determinant
+            raise ValueError("Singular Matrix")
+        # pylint: disable=W0718
+        except Exception as e:
+            print(f"Error: {e}")
+            return None
 
     def __str__(self) -> str:
         """
