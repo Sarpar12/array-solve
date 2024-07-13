@@ -211,7 +211,7 @@ class Matrix:
         except Exception as e:
             print(f"Error: {e}")
             return None
-    
+
     def adjoint_matrix(self) -> np.ndarray | None:
         """
         finds the adjoint of a matrix. This can be found via transposing 
