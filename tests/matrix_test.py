@@ -7,6 +7,13 @@ from unittest.mock import patch
 import numpy as np
 from src.array import Matrix
 
+def reset_matrix(matrix: Matrix):
+    """
+    resets matrix to blank slate
+    """
+    array : np.ndarray = np.arange(1, 10).reshape(3,3)
+    matrix.set_array(array)
+
 class TestMatrix(unittest.TestCase):
     """
     Testing class for testing matrix functionality
@@ -27,6 +34,7 @@ class TestMatrix(unittest.TestCase):
         self.matrix.col_swap()
         expected_array = np.array([[3, 2, 1], [6, 5, 4], [9, 8, 7]])
         np.testing.assert_array_equal(self.matrix.get_array(), expected_array)
+        reset_matrix(self.matrix)
 
     @patch('builtins.input', side_effect=['2', '3'])  # Mocks input for multiplying column 2 by 3
     def test_multiply_column(self, mocked_input):
@@ -47,6 +55,7 @@ class TestMatrix(unittest.TestCase):
         self.matrix.row_addition()
         expected_array = np.array([[1, 8, 15], [4, 5, 6], [7, 8, 9]])
         np.testing.assert_array_equal(self.matrix.get_array(), expected_array)
+        reset_matrix(self.matrix)
 
     @patch('builtins.input', side_effect=['1', '2', '2'])  # Mocks inputs for column addition
     def test_col_addition(self, mocked_input):
@@ -57,6 +66,7 @@ class TestMatrix(unittest.TestCase):
         self.matrix.col_addition()
         expected_array = np.array([[1, 7, 3], [4, 16, 6], [7, 25, 9]])
         np.testing.assert_array_equal(self.matrix.get_array(), expected_array)
+        reset_matrix(self.matrix)
 
     @patch('builtins.input', side_effect=['1', '2', '2'])  # Mocks inputs for row subtraction
     def test_row_subtraction(self, mocked_input):
@@ -67,6 +77,7 @@ class TestMatrix(unittest.TestCase):
         self.matrix.row_subtraction()
         expected_array = np.array([[-7, -8, -9], [4, 5, 6], [7, 8, 9]])
         np.testing.assert_array_equal(self.matrix.get_array(), expected_array)
+        reset_matrix(self.matrix)
 
     @patch('builtins.input', side_effect=['1', '2', '2'])  # Mocks inputs for column subtraction
     def test_col_subtraction(self, mocked_input):
@@ -77,17 +88,9 @@ class TestMatrix(unittest.TestCase):
         self.matrix.col_subtraction()
         expected_array = np.array([[-3, 2, 3], [-10, 5, 6], [-17, 8, 9]])
         np.testing.assert_array_equal(self.matrix.get_array(), expected_array)
+        reset_matrix(self.matrix)
 
-    def test_determinant_2x2(self):
-        """
-        tests determinant
-        """
-        print("Testing Determinant 2x2")
-        expected_det = 1*4 - 2*3  # Determinant calculation for a 2x2 matrix
-        result_det = self.matrix.deter_finder()
-        self.assertAlmostEqual(result_det, expected_det, msg="Determinant of matrix is incorrect.")
-
-    def test_determinant_3x3(self):
+    def test_determinant(self):
         """
         tests determinant
         """
@@ -113,6 +116,7 @@ class TestMatrix(unittest.TestCase):
         self.matrix.transpose()
         expected_array = np.array([[1, 4, 7], [2, 5, 8], [3, 6, 9]])
         np.testing.assert_array_equal(self.matrix.get_array(), expected_array)
+        reset_matrix(self.matrix)
 
     def test_cofactor_index(self):
         """
@@ -131,7 +135,7 @@ class TestMatrix(unittest.TestCase):
         print("Testing cofactor matrix")
         self.matrix.set_array(np.array([[1, 2, 3], [0, 1, 4], [5, 6, 0]]))
         cofactor_matrix = self.matrix.cofactor_matrix()
-        expected_matrix = np.array([[-24, 20, -15], [18, -15, 4], [5, -2, 1]])
+        expected_matrix = np.array([[-24, 20, -5], [18, -15, 4], [5, -2, 1]])
         np.testing.assert_array_almost_equal(cofactor_matrix, expected_matrix)
 
 if __name__ == '__main__':
