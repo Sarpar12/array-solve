@@ -4,6 +4,7 @@ contains the classes and functionality used in main.py
 from collections import deque
 from dataclasses import dataclass
 from typing import Deque, List
+from fractions import Fraction
 import numpy as np
 
 class Matrix:
@@ -234,6 +235,19 @@ class Matrix:
             return None
         else:
             return np.linalg.inv(self.matrix_array)
+
+    def frac_str(self) -> str:
+        """
+        returns the arrray, formatted as a string with fraction       
+        """
+        i_str = "[\n"
+        ndarray : np.ndarray = self.get_array()
+        for item in enumerate(ndarray):
+            for index_two, item_two in enumerate(item[1]):
+                i_str += ("%6s",  Fraction(item_two))
+                if index_two == len(item) - 1:
+                    i_str += "\n"
+        return i_str + "\n]"
 
     def __str__(self) -> str:
         """
