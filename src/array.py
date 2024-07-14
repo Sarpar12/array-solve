@@ -222,6 +222,19 @@ class Matrix:
         """
         return self.cofactor_matrix().T
 
+    def inverse_matrix(self) -> np.ndarray | None:
+        """
+        finds the inverse of the matrix via numpy's function
+        
+        `returns:`
+            np.ndarray the inverse matrix
+        """
+        if self.deter_finder() == 0:
+            print("Singular Matrix, no inverse!")
+            return None
+        else:
+            return np.linalg.inv(self.matrix_array)
+
     def __str__(self) -> str:
         """
         prints a string representation of the ndarray object
