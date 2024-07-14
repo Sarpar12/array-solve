@@ -242,11 +242,11 @@ class Matrix:
         i_str = "[\n"
         ndarray : np.ndarray = self.get_array()
         for item in enumerate(ndarray):
-            for index_two, item_two in enumerate(item[1]):
-                i_str += ("%6s",  Fraction(item_two))
-                if index_two == len(item) - 1:
-                    i_str += "\n"
-        return i_str + "\n]"
+            for item_two in enumerate(item[1]):
+                frac = Fraction(item_two[1]).limit_denominator()
+                i_str += "{:>6s}".format(str(frac)) # pylint: disable=C0209
+            i_str += "\n"
+        return i_str
 
     def __str__(self) -> str:
         """
