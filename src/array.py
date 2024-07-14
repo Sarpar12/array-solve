@@ -233,8 +233,7 @@ class Matrix:
         if self.deter_finder() == 0:
             print("Singular Matrix, no inverse!")
             return None
-        else:
-            return np.linalg.inv(self.matrix_array)
+        return np.linalg.inv(self.matrix_array)
 
     def frac_str(self) -> str:
         """
