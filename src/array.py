@@ -4,6 +4,7 @@ contains the classes and functionality used in main.py
 from collections import deque
 from dataclasses import dataclass
 from typing import Deque, List
+from fractions import Fraction
 import numpy as np
 
 class Matrix:
@@ -221,6 +222,31 @@ class Matrix:
             np.ndarray the adjoint matrix
         """
         return self.cofactor_matrix().T
+
+    def inverse_matrix(self) -> np.ndarray | None:
+        """
+        finds the inverse of the matrix via numpy's function
+        
+        `returns:`
+            np.ndarray the inverse matrix
+        """
+        if self.deter_finder() == 0:
+            print("Singular Matrix, no inverse!")
+            return None
+        return np.linalg.inv(self.matrix_array)
+
+    def frac_str(self) -> str:
+        """
+        returns the arrray, formatted as a string with fraction       
+        """
+        i_str = "[\n"
+        ndarray : np.ndarray = self.get_array()
+        for item in enumerate(ndarray):
+            for item_two in enumerate(item[1]):
+                frac = Fraction(item_two[1]).limit_denominator()
+                i_str += "{:>6s}".format(str(frac)) # pylint: disable=C0209
+            i_str += "\n"
+        return i_str
 
     def __str__(self) -> str:
         """

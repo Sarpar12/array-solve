@@ -148,6 +148,5 @@ class TestMatrix(unittest.TestCase):
         expected_matrix = np.array([[39, -15, -3], [6, -12, 6], [-31, 13, -3]])
         np.testing.assert_array_almost_equal(result_matrix, expected_matrix)
 
-
 if __name__ == '__main__':
     unittest.main()
